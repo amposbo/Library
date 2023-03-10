@@ -29,7 +29,7 @@ public class ListBooks extends JInternalFrame {
 	private ResultSetTableModel tableModel;
 
 	
-	private static final String JDBC_DRIVER = "scom.mysql.jdbc.Driver";
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/library";
 	 private static final String DEFAULT_QUERY = "SELECT BookID,Subject,Title,Author," +
             "Publisher,Copyright,Edition,Pages,NumberOfBooks,ISBN,Available,ShelfNo FROM Books";
