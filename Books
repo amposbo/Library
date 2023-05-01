@@ -7,7 +7,7 @@ public class Books {
 	private Statement statement = null;
 	private ResultSet resultSet = null;
 
-	private int bookID;
+	private int ISBN;
 	private String subject;
 	private String title;
 	private String author;
@@ -15,19 +15,17 @@ public class Books {
 	private int copyright;
 	private int edition;
 	private int pages;
-	private String ISBN;
 	private int numberOfBooks;
 	private int numberOfAvailbleBooks;
 	private int numberOfBorrowedBooks;
 	private boolean availble;
-	private String URL = "jdbc:odbc:LMS_DB";
-
+	private String URL = "jdbc:mysql://localhost:3306/library";
+        private static String username = "root";   
+        private static String password = "password";
 	public Books() {
 	}
 
-	public int getBookID() {
-		return bookID;
-	}
+	
 
 	public String getSubject() {
 		return subject;
@@ -57,7 +55,7 @@ public class Books {
 		return pages;
 	}
 
-	public String getISBN() {
+	public int getISBN() {
 		return ISBN;
 	}
 
@@ -79,7 +77,7 @@ public class Books {
 
 	public void connection(String Query) {
 		try {
-			Class.forName("jdbc:mysql://localhost:3306/library");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		}
 		catch (ClassNotFoundException cnfe) {
 			System.out.println("Books.java\n" + cnfe.toString());
@@ -89,11 +87,11 @@ public class Books {
 		}
 		
 		try {
-			connection = DriverManager.getConnection(URL);
+			connection = DriverManager.getConnection(URL, username, password);
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(Query);
 			while (resultSet.next()) {
-				bookID = resultSet.getInt(1);
+				ISBN = resultSet.getInt(1);
 				subject = resultSet.getString(2);
 				title = resultSet.getString(3);
 				author = resultSet.getString(4);
@@ -101,11 +99,10 @@ public class Books {
 				copyright = resultSet.getInt(6);
 				edition = resultSet.getInt(7);
 				pages = resultSet.getInt(8);
-				ISBN = resultSet.getString(9);
-				numberOfBooks = resultSet.getInt(10);
-				numberOfAvailbleBooks = resultSet.getInt(11);
-				numberOfBorrowedBooks = resultSet.getInt(12);
-				availble = resultSet.getBoolean(13);
+				numberOfBooks = resultSet.getInt(9);
+				numberOfAvailbleBooks = resultSet.getInt(10);
+				numberOfBorrowedBooks = resultSet.getInt(11);
+				availble = resultSet.getBoolean(12);
 			}
 			resultSet.close();
 			statement.close();
@@ -118,7 +115,7 @@ public class Books {
 
 	public void update(String Query) {
 		try {
-			Class.forName("jdbc:mysql://localhost:3306/library");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		}
 		catch (ClassNotFoundException cnfe) {
 			System.out.println("Books.java\n" + cnfe.toString());
@@ -129,7 +126,7 @@ public class Books {
 		
 		try {
 			
-			connection = DriverManager.getConnection(URL);
+			connection = DriverManager.getConnection(URL, username, password);
 			statement = connection.createStatement();
 			statement.executeUpdate(Query);
 			statement.close();
