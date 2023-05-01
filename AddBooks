@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
@@ -150,28 +152,28 @@ public class AddBooks extends JInternalFrame {
                             book = new Books();
                             //Check Information in the Database
                             
-                            book.connection("SELECT BookID FROM Books WHERE ISBN = '" + data[7] + "'");
-                            String ISBN = book.getISBN();
-                            if (!data[7].equalsIgnoreCase(ISBN)) {
+                            book.connection("SELECT ISBN FROM books WHERE ISBN = '" + data[0] + "'");
+                            int ISBN = book.getISBN();
+                            if (!data[0].equals(ISBN)) {
                                 try{
-                                    String sql="INSERT INTO Books (ISBN,Subject,Title,Author,Publisher,Copyright," +
-                                            "Edition,Page,NumberOfBooks,ShelfNo) VALUES "+
-                                            " (?,?,?,?,?,?,?,?,?,?,?,?)";
-                                    Class.forName("com.mysql.jdbc.Driver");
-                                    Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","");
+                                    String sql="INSERT INTO books (ISBN,Subject,Title,Author,Publisher,Copyright," +
+                                            "Edition,Page,NumberOfBooks) VALUES "+
+                                            " (?,?,?,?,?,?,?,?,?,?,?)";
+                                    Class.forName("com.mysql.cj.jdbc.Driver");
+                                    Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","password");
                                             PreparedStatement ps=con.prepareStatement(sql);
-                                            ps.setString(1, data[0]);
-                                            ps.setString(2, data[1]);
-                                            ps.setString(3, data[2]);
-                                            ps.setString(4, data[3]);
-                                            ps.setInt(5,Integer.parseInt(data[4]));
-                                            ps.setInt(6, Integer.parseInt(data[5]));
-                                            ps.setInt(7, Integer.parseInt(data[6]));
-                                            ps.setString(8, data[7]);
-                                            ps.setInt(9, Integer.parseInt(data[8]));
-                                            ps.setInt(10, Integer.parseInt(data[8]));
+                                            ps.setInt(1,Integer.parseInt(data[1]));
+                                            ps.setString(2, data[2]);
+                                            ps.setString(3, data[3]);
+                                            ps.setString(4, data[4]);
+                                            ps.setInt(5,Integer.parseInt(data[5]));
+                                            ps.setInt(6, Integer.parseInt(data[6]));
+                                            ps.setInt(7, Integer.parseInt(data[7]));
+                                            ps.setString(8, data[8]);
+                                            ps.setInt(9, Integer.parseInt(data[9]));
+                                            ps.setInt(10, Integer.parseInt(data[10]));
                                             ps.setBoolean(11, availble);
-                                            ps.setInt(12, Integer.parseInt(txtShelfNo.getText()));
+                                            
                                             ps.executeUpdate();
                                             
                                             JOptionPane.showMessageDialog(null, "Book Inserted Success !!!,Thank You", "Success", JOptionPane.INFORMATION_MESSAGE);
