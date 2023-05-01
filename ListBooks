@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.sql.SQLException;
+import java.sql.*;
 
 
 public class ListBooks extends JInternalFrame {
@@ -29,10 +30,12 @@ public class ListBooks extends JInternalFrame {
 	private ResultSetTableModel tableModel;
 
 	
-	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/library";
-	 private static final String DEFAULT_QUERY = "SELECT BookID,Subject,Title,Author," +
-            "Publisher,Copyright,Edition,Pages,NumberOfBooks,ISBN,Available,ShelfNo FROM Books";
+        private static String username = "root";
+        private static String password = "password";
+	 private static final String DEFAULT_QUERY = "SELECT ISBN,Subject,Title,Author," +
+            "Publisher,Copyright,Edition,Pages,NumberOfBooks,ISBN FROM Books";
 	
 	public ListBooks() {
 		
@@ -70,29 +73,29 @@ public class ListBooks extends JInternalFrame {
 		//for setting the size for the table columns
 		for (int i = 0; i < 12; i++) {
 			column = table.getColumnModel().getColumn(i);
-			if (i == 0) //BookID
+			if (i == 1) //BookID
 				column.setPreferredWidth(20);
-			if (i == 1) //Subject
+			if (i == 2) //Subject
 				column.setPreferredWidth(100);
-			if (i == 2) //Title
+			if (i == 3) //Title
 				column.setPreferredWidth(150);
-			if (i == 3) //Auther
+			if (i == 4) //Auther
 				column.setPreferredWidth(50);
-			if (i == 4) //Publisher
+			if (i == 5) //Publisher
 				column.setPreferredWidth(70);
-			if (i == 5) //Copyright
+			if (i == 6) //Copyright
 				column.setPreferredWidth(40);
-			if (i == 6) //Edition
+			if (i == 7) //Edition
 				column.setPreferredWidth(40);
-			if (i == 7) //Pages
+			if (i == 8) //Pages
 				column.setPreferredWidth(40);
-			if (i == 8) //NumberOfBooks
+			if (i == 9) //NumberOfBooks
 				column.setPreferredWidth(80);
-			if (i == 9) //ISBN
+			if (i == 10) //ISBN
 				column.setPreferredWidth(70);
-			if (i == 10) //Availble
+			if (i == 11) //Availble
 				column.setPreferredWidth(30);
-                        if (i == 11) //ShelfNo
+                        if (i == 12) //ShelfNo
 				column.setPreferredWidth(30);
 		}
 		
